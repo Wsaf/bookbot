@@ -3,12 +3,16 @@ def main():
     text = getBookText(book_path)
 
     count_words = getNumWords(text)
-    print(f"{count_words} words found in the book")
-
     char_freq = character_frequency(text.lower())
-    print("Character frequency in the book:")
-    for char, freq in char_freq.items():
-        print(f"'{char}': {freq}")
+    
+    char_list = [{"char": char, "num": count} for char, count in char_freq.items()]
+    char_list.sort(reverse=True, key=lambda d: d["num"])
+
+    # The Report output
+    print(f"Total number of words: {count_words}")
+    print("\nCharacter frequency report (sorted by frequency):")
+    for entry in char_list:
+        print(f"'{entry['char']}': {entry['num']}")
 
 def getBookText(path):
     with open(path) as f:
@@ -22,10 +26,11 @@ def character_frequency(text):
     freq_dict = {}
     
     for char in text:
-        if char in freq_dict:
-            freq_dict[char] += 1
-        else:
-            freq_dict[char] = 1
+        if char.isalpha():
+            if char in freq_dict:
+                freq_dict[char] += 1
+            else:
+                freq_dict[char] = 1
     
     return freq_dict
         
