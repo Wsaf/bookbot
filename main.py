@@ -1,9 +1,11 @@
+from collections import Counter
+
 def main():
     book_path = "books/frankenstein.txt"
-    text = getBookText(book_path)
+    text = read_book_text(book_path)
 
-    count_words = getNumWords(text)
-    char_freq = character_frequency(text.lower())
+    count_words = count_words_in_text(text)
+    char_freq = get_character_frequency(text.lower())
     
     char_list = [{"char": char, "num": count} for char, count in char_freq.items()]
     char_list.sort(reverse=True, key=lambda d: d["num"])
@@ -14,24 +16,15 @@ def main():
     for entry in char_list:
         print(f"'{entry['char']}': {entry['num']}")
 
-def getBookText(path):
+def read_book_text(path):
     with open(path) as f:
         return f.read()
 
-def getNumWords(text):
+def count_words_in_text(text):
     words = text.split()
     return len(words)
 
-def character_frequency(text):
-    freq_dict = {}
-    
-    for char in text:
-        if char.isalpha():
-            if char in freq_dict:
-                freq_dict[char] += 1
-            else:
-                freq_dict[char] = 1
-    
-    return freq_dict
+def get_character_frequency(text):
+    return Counter(char for char in text if char.isalpha())
         
 main()
