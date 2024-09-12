@@ -2,8 +2,16 @@ from collections import Counter
 
 def main():
     book_path = "books/frankenstein.txt"
-    text = read_book_text(book_path)
 
+    try:
+        text = read_book_text(book_path)
+    except FileNotFoundError:
+        print(f"Error: The file at '{book_path}' was not found.")
+        return
+    except IOError:
+        print(f"Error: Unable to read the file at {book_path}")
+        return
+    
     count_words = count_words_in_text(text)
     char_freq = get_character_frequency(text.lower())
     
