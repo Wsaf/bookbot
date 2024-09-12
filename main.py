@@ -35,4 +35,5 @@ def count_words_in_text(text):
 def get_character_frequency(text):
     return Counter(char for char in text if char.isalpha())
         
-main()
+if __name__ == "__main__":
+    main()
